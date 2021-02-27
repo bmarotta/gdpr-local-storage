@@ -12,12 +12,14 @@ enum LoadStatus {
  */
 export class TcfApiV2Wrapper {
     private defferedPromise: DeferredPromise<boolean>;
-    private tcfApiStatus = LoadStatus.NotLoaded;
     public consentNeeded: boolean | null = null;
     public consentToCookies: boolean | null = null;
 
     constructor(private tcfApiTimeout: number) {
         this.defferedPromise = new DeferredPromise();
+        this.defferedPromise.promise
+            // Avoid uncatched promies
+            .catch((reason) => console.warn('Failed TCF API: ' + reason));
         this.subscribeToTcfApi();
     }
 
@@ -33,7 +35,6 @@ export class TcfApiV2Wrapper {
         if (!this.hasTcfApi()) {
             this.defferedPromise.reject(new Error((<any>window).__uspFailed ? "TCF API timeout" : "TCF API not available"));
         } else {
-            this.tcfApiStatus = LoadStatus.Loading;
             setTimeout(() => {
                 if (!this.hasTcfApi()) {
                     this.defferedPromise.reject(new Error((<any>window).__uspFailed ? "TCF API timeout" : "Failed loading TCF API"));
@@ -52,12 +53,10 @@ export class TcfApiV2Wrapper {
                 if (success) {
                     this.consentNeeded = tcData.gdprApplies;
                     if (!this.consentNeeded) {
-                        this.tcfApiStatus = LoadStatus.Loaded;
                         this.consentToCookies = true;
                         this.defferedPromise.resolve(true);
                     }
                     if (this.consentNeeded && (tcData.eventStatus === "tcloaded" || tcData.eventStatus === "useractioncomplete")) {
-                        this.tcfApiStatus = LoadStatus.Loaded;
                         const oldValue = this.consentToCookies;
                         const userConsentedToCookies =
                             tcData.purpose.consents != undefined && tcData.purpose.consents[1] != undefined && tcData.purpose.consents[1];
