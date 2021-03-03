@@ -14,12 +14,12 @@ export class DeferredPromise<T> {
     public resolve(value: T): void {
         if (this._resolve) {
             this._resolve(value);
-        }        
+        }
     }
 
     public reject(reason?: Error): void {
         if (this._reject) {
             this._reject(reason);
-        }        
+        }
     }
 }

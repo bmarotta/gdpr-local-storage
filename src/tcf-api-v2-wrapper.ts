@@ -19,7 +19,7 @@ export class TcfApiV2Wrapper {
         this.defferedPromise = new DeferredPromise();
         this.defferedPromise.promise
             // Avoid uncatched promies
-            .catch((reason) => console.warn('Failed TCF API: ' + reason));
+            .catch((reason) => console.warn("Failed TCF API: " + reason));
         this.subscribeToTcfApi();
     }
 

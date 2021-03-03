@@ -3,11 +3,11 @@
  */
 class LocalStorageFallback {
     // When true, write all directly to the local storage
-    static passThrough: boolean = true;
+    static passThrough = true;
 
     static initialize() {
         if (!LocalStorageFallback.passThrough) {
-            console.warn('LocalStorageFallback already initialized');
+            console.warn("LocalStorageFallback already initialized");
             return;
         }
 
@@ -108,7 +108,7 @@ class LocalStorageFallback {
     public static release() {
         if (!window.localStorage._setItem || !LocalStorageFallback.passThrough) {
             // Fallback not installed
-            console.warn('LocalStorageWrapper not initialized');
+            console.warn("LocalStorageWrapper not initialized");
             return;
         }
         // Save all items to the local storage
