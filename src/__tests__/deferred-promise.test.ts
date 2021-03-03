@@ -14,7 +14,7 @@ test("DeferredPromise false", () => {
 
 test("DeferredPromise reject", () => {
     const dp3 = new DeferredPromise<boolean>();
-    dp3.reject(new Error('Failed'));
+    dp3.reject(new Error("Failed"));
 
     return expect(dp3.promise).rejects.toBeInstanceOf(Error);
 });

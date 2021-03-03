@@ -1,12 +1,12 @@
 {
     "compilerOptions": {
       "target": "es5",
-      "module": "amd",
+      "module": "es6",
       "moduleResolution": "node",
-      //"declaration": true,
-      //"outDir": "dist",
+      "declaration": true,
+      "outDir": "ts-out",
       "strict": true,
-      "outFile": "./dist/index.js"
+      //"outFile": "./dist/index.js"
     },
     "include": ["src"],
     "exclude": ["node_modules", "**/__tests__/*"]
